@@ -14,8 +14,11 @@ public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
+
     private String password;
+
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "account")
@@ -24,9 +27,7 @@ public class Account implements UserDetails {
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
 
-    public Account() {
-
-    }
+    public Account() {}
 
     public Account(String username, String password, BigDecimal balance, List<Transaction> transactions, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
@@ -53,6 +54,7 @@ public class Account implements UserDetails {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -61,6 +63,7 @@ public class Account implements UserDetails {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -83,5 +86,25 @@ public class Account implements UserDetails {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // Default to true, adjust logic if needed
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // Default to true, adjust logic if needed
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Default to true, adjust logic if needed
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; // Default to true, adjust logic if needed
     }
 }
